@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Chatbot</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+        #chat-box { border: 1px solid #ccc; height: 400px; overflow-y: scroll; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; }
+        .message { margin-bottom: 0.5rem; padding: 0.5rem; border-radius: 5px; }
+        .user { background-color: #e3f2fd; text-align: right; }
+        .bot { background-color: #f1f1f1; text-align: left; }
+        #input-area { display: flex; gap: 0.5rem; }
+        input { flex-grow: 1; padding: 0.5rem; }
+        button { padding: 0.5rem 1rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>AI Chatbot</h2>
+    <div id="chat-box"></div>
+    
+    <div id="input-area">
+        <input type="text" id="user-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const chatBox = document.getElementById('chat-box');
+            const message = inputField.value.trim();
+
+            if (!message) return;
+
+            // 1. Display User Message
+            appendMessage(message, 'user');
+            inputField.value = '';
+
+            try {
+                // 2. Call YOUR Backend Server (Not the API directly)
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+
+                // 3. Extract AI Reply from JSON Response
+                // Note: The path below (choices[0].message.content) is standard for OpenAI-compatible APIs.
+                // Adjust if your specific Agent Router uses a different structure.
+                if (data.choices && data.choices.length > 0) {
+                    const botReply = data.choices[0].message.content;
+                    appendMessage(botReply, 'bot');
+                } else {
+                    appendMessage("Error: No response from agent.", 'bot');
+                    console.error("Full API Response:", data);
+                }
+
+            } catch (error) {
+                console.error("Fetch error:", error);
+                appendMessage("Error connecting to server.", 'bot');
+            }
+        }
+
+        function appendMessage(text, sender) {
+            const chatBox = document.getElementById('chat-box');
+            const div = document.createElement('div');
+            div.classList.add('message', sender);
+            div.textContent = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Allow pressing "Enter" to send
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
