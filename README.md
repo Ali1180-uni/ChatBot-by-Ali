@@ -1,357 +1,325 @@
-# ✨ Ali's AI Assistant
+# Ali.ai
 
-<div align="center">
+Ali.ai is a full-stack AI assistant built with React, Express, Google Gemini, and MongoDB. It provides a focused three-page experience for exploring the assistant, signing in, and keeping conversations organized.
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-![React](https://img.shields.io/badge/React-19.2.0-61DAFB.svg?logo=react)
-![Node](https://img.shields.io/badge/Node.js-Express-339933.svg?logo=node.js)
-![AI](https://img.shields.io/badge/Powered%20by-Gemini%20AI-4285F4.svg?logo=google)
+## Features
 
-A modern, beautiful AI-powered chatbot built with React and Google Gemini AI.
+- React Router pages for Home, Chat, About, and fallback navigation
+- Responsive layout with a persistent Chat workspace
+- Tailwind CSS v4 styling
+- Material UI icons
+- Login and account creation with form validation
+- Password hashing with bcryptjs
+- JWT-based authentication
+- User and conversation persistence with MongoDB and Mongoose
+- Chat history loaded per authenticated user
+- Gemini-powered responses
+- Daily Hero greetings cached in memory and browser storage
+- GitHub-flavored Markdown with tables, task lists, blockquotes, links, and headings
+- Syntax-highlighted fenced code blocks with copy-to-clipboard
+- Toast notifications for auth, API, and session events
+- Loading skeletons for chat history and animated response indicators
+- Public SVG brand assets for the title and assistant mark
 
-[Features](#-features) • [Demo](#-demo) • [Installation](#-installation) • [Usage](#-usage) • [API](#-api-reference) • [Contributing](#-contributing)
+## Screenshots
 
-</div>
+### Home
 
----
+![Ali.ai Home page](docs/Home.png)
 
-## 🌟 Features
+### Chat
 
-- 🤖 **AI-Powered Conversations** - Powered by Google Gemini 2.5 Flash model
-- 🎨 **Modern Dark Theme UI** - Beautiful glassmorphism design with animated gradients
-- ✨ **Smooth Animations** - Liquid blob backgrounds, message slide-ins, typing indicators
-- 📝 **Markdown Support** - Renders formatted responses with headers, lists, code blocks, tables
-- 💬 **Real-time Chat** - Instant messaging with loading states
-- 📱 **Fully Responsive** - Works beautifully on desktop and mobile
-- 🚀 **Quick Suggestions** - Pre-built prompts for easy start
-- 🎯 **Auto-scroll** - Automatically scrolls to latest messages
+![Ali.ai Chat page](docs/chat.png)
 
----
+### About
 
-## 📸 Demo
+![Ali.ai About page](docs/About.png)
 
-### Chat Interface
-The chatbot features a stunning dark theme with animated gradient blobs, glassmorphism effects, and smooth transitions.
-
-### Key UI Elements
-- **Header** with status indicator and gradient text
-- **Chat Window** with user/bot avatars and styled message bubbles
-- **Input Area** with animated send button
-- **Typing Indicator** with bouncing dots
-- **Suggestion Buttons** for quick prompts
-
----
-
-## 🛠️ Tech Stack
+## Technology
 
 ### Frontend
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| React | 19.2.0 | UI Framework |
-| Vite | 7.2.4 | Build Tool |
-| react-markdown | 10.1.0 | Markdown Rendering |
-| CSS3 | - | Styling & Animations |
+
+- React 19
+- Vite
+- React Router
+- Tailwind CSS v4
+- React Hook Form
+- React Toastify
+- React Markdown
+- Remark GFM
+- Rehype Highlight and Highlight.js
+- Material UI icons
 
 ### Backend
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Node.js | - | Runtime |
-| Express | 4.18.2 | Web Server |
-| @google/genai | 1.34.0 | Gemini AI SDK |
-| cors | 2.8.5 | Cross-Origin Requests |
-| dotenv | 16.3.1 | Environment Variables |
 
----
+- Node.js
+- Express
+- Mongoose
+- MongoDB
+- Google Gemini SDK
+- bcryptjs
+- JSON Web Tokens
+- CORS
+- dotenv
 
-## 📦 Installation
+## Project Structure
 
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-- Google Gemini API Key ([Get one here](https://makersuite.google.com/app/apikey))
-
-### Step 1: Clone the Repository
-```bash
-git clone https://github.com/yourusername/chatbot.git
-cd chatbot
+```text
+ChatBot-by-Ali/
+├── Backend/
+│   ├── models/
+│   │   ├── Conversation.js
+│   │   └── User.js
+│   ├── .env.example
+│   ├── package.json
+│   └── server.js
+├── Frontend/
+│   └── chatbot/
+│       ├── public/
+│       │   ├── chatLogo.svg
+│       │   └── title.svg
+│       ├── src/
+│       │   ├── components/
+│       │   │   ├── Footer.jsx
+│       │   │   ├── MarkdownMessage.jsx
+│       │   │   └── Navbar.jsx
+│       │   ├── pages/
+│       │   │   ├── About.jsx
+│       │   │   ├── Chat.jsx
+│       │   │   └── Home.jsx
+│       │   ├── routes/
+│       │   │   └── AppRoutes.jsx
+│       │   ├── App.jsx
+│       │   ├── index.css
+│       │   └── main.jsx
+│       ├── index.html
+│       ├── package.json
+│       └── vite.config.js
+├── docs/
+│   ├── About.png
+│   ├── chat.png
+│   └── Home.png
+├── docker-compose.yml
+└── README.md
 ```
 
-### Step 2: Backend Setup
+## Requirements
+
+- Node.js 18 or newer
+- npm
+- Docker Desktop or Docker Engine with Compose
+- A Google Gemini API key
+
+## Setup
+
+### 1. Install dependencies
+
 ```bash
-# Navigate to backend directory
 cd Backend
-
-# Install dependencies
 npm install
 
-# Create environment file
-cp .env.example .env
-
-# Add your Gemini API key to .env
-echo "GEMINI_API_KEY=your_api_key_here" > .env
-```
-
-### Step 3: Frontend Setup
-```bash
-# Navigate to frontend directory
 cd ../Frontend/chatbot
-
-# Install dependencies
 npm install
 ```
 
----
+### 2. Configure the backend
 
-## 🚀 Usage
+Create the environment file:
 
-### Development Mode
+```bash
+cd ../../Backend
+cp .env.example .env
+```
 
-**Terminal 1 - Start Backend:**
+Set the values in `Backend/.env`:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+MONGODB_URI=mongodb://127.0.0.1:27017/ali-ai
+JWT_SECRET=replace_with_a_long_random_secret
+PORT=3000
+```
+
+Use a long random value for `JWT_SECRET`. Do not commit `.env` or expose API keys in source control.
+
+### 3. Start MongoDB with Docker
+
+From the repository root:
+
+```bash
+docker compose up -d mongodb
+```
+
+The Compose service publishes MongoDB on `127.0.0.1:27017` and stores data in the named volume `ali-ai-mongodb-data`.
+
+Check the container:
+
+```bash
+docker compose ps
+docker compose logs mongodb
+```
+
+Stop the service without removing its data:
+
+```bash
+docker compose stop mongodb
+```
+
+## Run Locally
+
+Start the backend in one terminal:
+
 ```bash
 cd Backend
 npm start
-# or with nodemon for auto-reload
-nodemon server.js
 ```
-Backend runs on `http://localhost:3000`
 
-**Terminal 2 - Start Frontend:**
+The backend runs on `http://localhost:3000`.
+
+Start Vite in another terminal:
+
 ```bash
 cd Frontend/chatbot
 npm run dev
 ```
-Frontend runs on `http://localhost:5173`
 
-### Production Mode
+The frontend normally runs on `http://localhost:5173`. If that port is busy, Vite selects another available port.
 
-**Build Frontend:**
+The Vite development server proxies `/api` requests to the backend.
+
+## Production Build
+
+Build the frontend:
+
 ```bash
 cd Frontend/chatbot
 npm run build
 ```
 
-**Start Server (serves both API and built frontend):**
+Start the backend:
+
 ```bash
 cd Backend
 npm start
 ```
-Access at `http://localhost:3000`
 
----
+The Express server serves the built frontend from `Frontend/chatbot/dist` and exposes the API from the same origin.
 
-## 📁 Project Structure
+## Routes
 
-```
-chatbot/
-├── 📂 Backend/
-│   ├── 📄 server.js          # Express server & API routes
-│   ├── 📄 package.json       # Backend dependencies
-│   ├── 📄 .env               # Environment variables (not in git)
-│   └── 📂 public/            # Static files
-│
-├── 📂 Frontend/
-│   └── 📂 chatbot/
-│       ├── 📂 src/
-│       │   ├── 📄 App.jsx    # Main React component
-│       │   ├── 📄 App.css    # Styles & animations
-│       │   ├── 📄 main.jsx   # React entry point
-│       │   └── 📂 assets/    # Static assets
-│       ├── 📄 index.html     # HTML template
-│       ├── 📄 vite.config.js # Vite configuration
-│       └── 📄 package.json   # Frontend dependencies
-│
-├── 📄 .gitignore             # Git ignore rules
-└── 📄 README.md              # This file
-```
+| Route | Purpose |
+| --- | --- |
+| `/` | Home hero and product introduction |
+| `/chat` | Authentication and persistent AI chat workspace |
+| `/about` | Product and design context |
+| Any unknown route | Redirects to Home |
 
----
+## API Reference
 
-## 🔌 API Reference
+### Authentication
 
-### POST `/api/chat`
+#### `POST /api/auth/register`
 
-Send a message to the AI and receive a response.
+Creates a user account.
 
-**Request:**
 ```json
 {
-  "message": "Hello, how are you?"
+  "name": "Ali",
+  "email": "ali@example.com",
+  "password": "a-password-with-8-characters"
 }
 ```
 
-**Response:**
+Returns a JWT and public user details.
+
+#### `POST /api/auth/login`
+
+Authenticates an existing user.
+
 ```json
 {
-  "choices": [
-    {
-      "message": {
-        "role": "assistant",
-        "content": "Hello! I'm doing great, thank you for asking! How can I help you today?"
-      }
-    }
-  ]
+  "email": "ali@example.com",
+  "password": "a-password-with-8-characters"
 }
 ```
 
-**Error Response:**
+#### `GET /api/auth/me`
+
+Returns the authenticated user. Requires:
+
+```text
+Authorization: Bearer <token>
+```
+
+### Chat and history
+
+#### `GET /api/history`
+
+Returns the latest conversation for the authenticated user.
+
+#### `POST /api/chat`
+
+Generates a Gemini response and saves both the user message and assistant response.
+
 ```json
 {
-  "error": "Something went wrong"
+  "message": "Explain recursion with an example."
 }
 ```
 
----
+#### `GET /api/greetings`
 
-## ⚙️ Configuration
+Returns exactly two daily Hero greeting lines. The server caches the generated result for the current UTC day, and the frontend caches it in `localStorage` for the same date.
 
-### Environment Variables
-
-Create a `.env` file in the `Backend/` directory:
-
-```env
-# Required
-GEMINI_API_KEY=your_gemini_api_key_here
-
-# Optional
-PORT=3000
-```
-
-### Vite Proxy Configuration
-
-The frontend proxies API requests to the backend. Configuration in `vite.config.js`:
-
-```javascript
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:3000",
-        changeOrigin: true,
-      },
-    },
-  },
-});
-```
-
----
-
-## 🎨 Customization
-
-### Changing Colors
-
-Edit the CSS variables in `App.css`:
-
-```css
-/* Primary gradient colors */
-background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
-
-/* Background color */
-background: #0f0f1a;
-
-/* Accent color */
-color: #a78bfa;
-```
-
-### Changing the AI Model
-
-Edit `server.js`:
-```javascript
-const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",  // Change model here
-    contents: userMessage
-});
-```
-
-### Adding New Suggestions
-
-Edit the suggestions array in `App.jsx`:
-```jsx
-<div className="suggestions">
-  <button className="suggestion" onClick={() => handleSuggestionClick("Your prompt here")}>
-    🎯 Your Label
-  </button>
-  {/* Add more suggestions */}
-</div>
-```
-
----
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-| Issue | Solution |
-|-------|----------|
-| `CORS error` | Ensure backend is running and CORS is configured |
-| `API key invalid` | Check your `.env` file has correct Gemini API key |
-| `Cannot connect to server` | Verify backend is running on port 3000 |
-| `Module not found` | Run `npm install` in both Backend and Frontend |
-| `Port already in use` | Kill the process or change PORT in `.env` |
-
-### Debug Mode
-
-Check browser console and terminal for error messages.
-
----
-
-## 📝 Scripts
+## Scripts
 
 ### Backend
+
 | Command | Description |
-|---------|-------------|
-| `npm start` | Start the server |
-| `nodemon server.js` | Start with auto-reload |
+| --- | --- |
+| `npm start` | Start the Express server with Nodemon |
 
 ### Frontend
+
 | Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
+| --- | --- |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Build the frontend for production |
+| `npm run preview` | Preview the production build |
 | `npm run lint` | Run ESLint |
 
----
+## Troubleshooting
 
-## 🤝 Contributing
+### MongoDB connection fails
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Make sure Docker is running and start the database:
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+```bash
+docker compose up -d mongodb
+```
 
----
+Confirm that port `27017` is available and that `MONGODB_URI` matches the running service.
 
-## 📄 License
+### API requests fail from the frontend
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Start the backend on port `3000`. During development, confirm that Vite is using the proxy configured in `Frontend/chatbot/vite.config.js`.
 
----
+### Authentication does not persist
 
-## 👨‍💻 Author
+Check that `JWT_SECRET` is set and that MongoDB is available. The backend intentionally does not serve as a successful persistent application when the database connection fails.
 
-**Ali**
+### Port already in use
 
-- GitHub: [Ali1180-uni](https://github.com/Ali1180-uni)
+Vite can select another development port automatically. For the backend, set a different `PORT` value in `Backend/.env`.
 
----
+## Security Notes
 
-## 🙏 Acknowledgments
+- Keep `Backend/.env` private.
+- Rotate any API key that has been exposed publicly.
+- Replace the development JWT fallback with a strong `JWT_SECRET` before deployment.
+- Use HTTPS and secure cookie-based sessions for a production deployment.
+- Add rate limiting and request validation before exposing the API publicly.
 
-- [Google Gemini AI](https://deepmind.google/technologies/gemini/) for the powerful AI model
-- [React](https://react.dev/) for the amazing UI framework
-- [Vite](https://vitejs.dev/) for the blazing fast build tool
+## Author
 
----
-
-<div align="center">
-
-Made with ❤️ by Ali
-
-⭐ Star this repo if you found it helpful!
-
-</div>
+Built by [M. Ali Tahir](https://github.com/Ali1180-uni).

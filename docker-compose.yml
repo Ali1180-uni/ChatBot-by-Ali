@@ -1,0 +1,14 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: ali-ai-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: ali-ai
+    volumes:
+      - ali-ai-mongodb-data:/data/db
+
+volumes:
+  ali-ai-mongodb-data:
